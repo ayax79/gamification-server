@@ -3,15 +3,13 @@ package com.jivesoftware.gamification
 import org.scalatra._
 import scalate.ScalateSupport
 
+import org.json4s.JsonAST._
+import org.json4s.JsonDSL._
+
 class GamificationServlet extends GamificationserverStack {
 
   get("/") {
-    <html>
-      <body>
-        <h1>Hello, world!</h1>
-        Say <a href="hello-scalate">hello to Scalate</a>.
-      </body>
-    </html>
+    ("success" -> "true")
   }
-  
+
 }
