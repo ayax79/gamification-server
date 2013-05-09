@@ -6,16 +6,22 @@ import com.mojolly.scalate.ScalatePlugin._
 import ScalateKeys._
 
 object GamificationserverBuild extends Build {
+  import com.github.siasia.PluginKeys.port
+  import com.github.siasia.WebPlugin.{container, webSettings}
+
   val Organization = "com.jivesoftware"
   val Name = "gamification-server"
   val Version = "0.1.0-SNAPSHOT"
   val ScalaVersion = "2.10.0"
   val ScalatraVersion = "2.2.0"
+  def Conf = config("container")
+  def jettyPort = 8081
 
   lazy val project = Project(
     "gamification-server",
     file("."),
-    settings = Defaults.defaultSettings ++ ScalatraPlugin.scalatraWithJRebel ++ scalateSettings ++ Seq(
+    settings = Defaults.defaultSettings ++ ScalatraPlugin.scalatraWithJRebel ++ scalateSettings ++ webSettings ++ Seq(
+      port in Conf := jettyPort,
       organization := Organization,
       name := Name,
       version := Version,
