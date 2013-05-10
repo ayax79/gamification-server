@@ -23,7 +23,7 @@ object DateTimeUtil {
   implicit class RichDateTime(val self: DateTime) {
 
     def toNitroString: String =
-      if (self != null) (self.getMillis / 1000L).asInstanceOf[String]
+      if (self != null) (self.getMillis / 1000L).toString
       else null
 
   }

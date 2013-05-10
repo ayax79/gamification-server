@@ -52,7 +52,7 @@ object LogActionRequest {
 }
 
 case class LogActionResponse(code: ResponseCode,
-                             request: LoginRequest) extends GamificationResponse {
+                             request: LogActionRequest) extends GamificationResponse {
   def toJson = {
     val json: JValue = ("code" -> code.code)
     json ++ request.toJson

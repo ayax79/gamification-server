@@ -12,7 +12,7 @@ object MapUtil {
   /**
    * Parses a http query style string
    */
-  val parseQueryString = parse("#") _
+  val parseQueryString = parse("&") _
 
   val parseCommaString = parse(",") _
 

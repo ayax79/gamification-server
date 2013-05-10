@@ -17,8 +17,8 @@ class GamificationServlet extends GamificationServerStack {
 
   private val log = LoggerFactory.getLogger(classOf[GamificationServlet])
 
-  get("/") {
-    try {
+  get("/api/json") {
+    val response = try {
       val result = for {
         method <- params.get("method")
         if (method == "batch.run")
@@ -34,6 +34,9 @@ class GamificationServlet extends GamificationServerStack {
         log.error("An error occurred: " + t.getMessage, t)
         ErrorResponse(ResponseCode.SERVER_ERROR, t.getMessage)
     }
+
+    log.info("Returning response: " + response)
+    response
   }
 
 }
