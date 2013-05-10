@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory
 import org.json4s.JsonAST
 import org.json4s.jackson.JsonMethods._
 import org.json4s.JsonAST.JArray
-import com.jivesoftware.gamification.request.GamificationRequest
+import com.jivesoftware.gamification.request.{ErrorResponse, ResponseCode, GamificationResponse, GamificationRequest}
 import com.jivesoftware.gamification.dispatcher.RequestDispatcher
 
 class GamificationServlet extends GamificationServerStack {
@@ -19,24 +19,22 @@ class GamificationServlet extends GamificationServerStack {
 
   get("/") {
     try {
-
       val result = for {
-        method <- Option(params("method"))
+        method <- params.get("method")
         if (method == "batch.run")
-        feed <- Option(params("methodFeed"))
+        feed <- params.get("methodFeed")
       } yield {
         log.info("feed: " + feed)
         GamificationRequest.parseRequests(feed).map(dispatch)
       }
+      GamificationResponse.toJson(result.getOrElse(Nil))
     }
     catch {
       case t: Throwable =>
         log.error("An error occurred: " + t.getMessage, t)
+        ErrorResponse(ResponseCode.SERVER_ERROR, t.getMessage)
     }
-    log.info("ending request")
-    ("success" -> "true")
   }
-
 
 }
 

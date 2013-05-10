@@ -1,21 +1,18 @@
 package com.jivesoftware.gamification.dispatcher
 
-import com.jivesoftware.gamification.request.{GamificationRequest, GamificationResponse}
+import com.jivesoftware.gamification.request.{UnhandledRequest, GamificationRequest, GamificationResponse}
 
 // eventually this needs to be a little more robust.... but for now.
 trait RequestDispatcher {
 
   val handlers: Map[Class[_], RequestHandler[_ >: GamificationRequest, _]]
 
-  def dispatch[T <: GamificationRequest](request: T): Either[UnhandledRequest, _ >: GamificationResponse] =
+  def dispatch[T <: GamificationRequest](request: T): Either[UnhandledRequest, GamificationResponse] =
     handlers.get(request.getClass).map( d => d.handler(request)) match {
-      case Some(response) => Right(response)
+      case Some(response) => Right(response.asInstanceOf[GamificationResponse])
       case None => Left(UnhandledRequest(request))
     }
 
 }
 
-/**
- * If we couldn't handle a request we just return the request back unhandled in this wrapper
- */
-case class UnhandledRequest(request: GamificationRequest)
+

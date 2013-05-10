@@ -9,7 +9,14 @@ import org.json4s.JsonDSL._
 import UUIDUtil._
 import DateTimeUtil._
 
-case class LoginRequest(asyncToken: UUID, apiKey: String, sig: String, ts: DateTime) extends GamificationRequest
+case class LoginRequest(asyncToken: UUID, apiKey: String, sig: String, ts: DateTime) extends GamificationRequest {
+  def toJson: JObject =
+    ("Login" ->
+      ("asyncToken" -> asyncToken.toString) ~
+      ("apiKey" -> apiKey) ~
+      ("sig" -> sig) ~
+      ("ts" -> toNitroTimeStamp(ts)))
+}
 object LoginRequest {
 
   def apply(map: Map[String, String]): Option[LoginRequest] =

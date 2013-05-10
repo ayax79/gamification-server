@@ -4,6 +4,7 @@ import org.json4s.JsonAST.{JObject, JString, JField, JArray}
 import java.util.UUID
 import org.slf4j.LoggerFactory
 import com.jivesoftware.gamification.user.request.LoginRequest
+import com.jivesoftware.gamification.util.Jsonable
 
 object GamificationRequest {
 
@@ -58,14 +59,9 @@ object GamificationRequest {
 
 
 }
-trait GamificationRequest {
+trait GamificationRequest extends Jsonable {
   val asyncToken:UUID
   val apiKey:String
-}
-trait GamificationResponse {
-  val code: ResponseCode
-
-  def toJson: JObject
 }
 
 
