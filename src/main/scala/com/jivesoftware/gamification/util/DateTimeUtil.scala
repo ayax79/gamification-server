@@ -20,8 +20,14 @@ object DateTimeUtil {
     }
   }
 
-  implicit def toNitroTimeStamp(dt: DateTime): String =
-    if (dt != null) (dt.getMillis / 1000L).asInstanceOf[String]
-    else null
+  implicit class RichDateTime(val self: DateTime) {
+
+    def toNitroString: String =
+      if (self != null) (self.getMillis / 1000L).asInstanceOf[String]
+      else null
+
+  }
 
 }
+
+

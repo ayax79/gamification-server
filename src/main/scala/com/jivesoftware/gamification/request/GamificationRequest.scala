@@ -1,10 +1,11 @@
 package com.jivesoftware.gamification.request
 
-import org.json4s.JsonAST.{JObject, JString, JField, JArray}
+import org.json4s.JsonAST.{JString, JArray}
 import java.util.UUID
 import org.slf4j.LoggerFactory
-import com.jivesoftware.gamification.user.request.LoginRequest
+import com.jivesoftware.gamification.user.request.{LogActionRequest, LoginRequest}
 import com.jivesoftware.gamification.util.Jsonable
+import com.jivesoftware.gamification.util.MapUtil.parseQueryString
 
 object GamificationRequest {
 
@@ -28,30 +29,19 @@ object GamificationRequest {
   protected[request] def requests(arr: JArray): List[GamificationRequest] = {
     val requests: List[Option[GamificationRequest]] = for {
       JString(content) <- arr
-      req = parseRequest(content) // parse the url encoded content for the batch request
+      req = parseQueryString(content) // parse the url encoded content for the batch request
       method <- req.get("method") // grab the method from the map
     } yield  request(method, req)
     requests.flatten
   }
 
-  /**
-   * Takes the string from the json array which is the method request in key values pairs separated by
-   * ampersands.
-   */
-  protected[request] def parseRequest(s: String): Map[String, String] =
-    s.split("&").foldLeft(Map.empty[String, String]) {
-      (acc, cur) =>
-        val tokens = cur.split("=")
-        acc + (tokens(0) -> tokens(1))
-    }
-
 
   /**
    * Builds the request of the method
    */
-  protected[request] def request(method: String, request: Map[String, String]): Option[GamificationRequest] = method match {
-    case "user.login" =>
-      LoginRequest(request).asInstanceOf[Option[GamificationRequest]]
+  protected[request] def request(method: String, request: Map[String, String]): Option[_ <: GamificationRequest] = method match {
+    case LoginRequest.method => LoginRequest(request)
+    case LogActionRequest.method => LogActionRequest(request)
     case _ =>
       log.warn("Unmatched method found: " + method)
       None // did not match a known type
@@ -61,7 +51,6 @@ object GamificationRequest {
 }
 trait GamificationRequest extends Jsonable {
   val asyncToken:UUID
-  val apiKey:String
 }
 
 

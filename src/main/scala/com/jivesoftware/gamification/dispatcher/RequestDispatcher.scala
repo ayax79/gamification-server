@@ -3,6 +3,7 @@ package com.jivesoftware.gamification.dispatcher
 import com.jivesoftware.gamification.request.{UnhandledRequest, GamificationRequest, GamificationResponse}
 
 // eventually this needs to be a little more robust.... but for now.
+// I am thinking I am eventually going to replace this with apache camel
 trait RequestDispatcher {
 
   val handlers: Map[Class[_], RequestHandler[_ >: GamificationRequest, _]]
