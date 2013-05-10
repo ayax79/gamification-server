@@ -50,7 +50,6 @@ object GamificationRequest {
    */
   protected[request] def request(method: String, request: Map[String, String]): Option[GamificationRequest] = method match {
     case "user.login" =>
-      log.info("Found a login request")
       LoginRequest(request).asInstanceOf[Option[GamificationRequest]]
     case _ =>
       log.warn("Unmatched method found: " + method)
@@ -62,6 +61,11 @@ object GamificationRequest {
 trait GamificationRequest {
   val asyncToken:UUID
   val apiKey:String
+}
+trait GamificationResponse {
+  val code: ResponseCode
+
+  def toJson: JObject
 }
 
 

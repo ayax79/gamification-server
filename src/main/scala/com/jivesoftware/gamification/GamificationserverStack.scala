@@ -9,7 +9,7 @@ import collection.mutable
 import org.json4s.{DefaultFormats, Formats}
 import org.scalatra.json._
 
-trait GamificationserverStack extends ScalatraServlet with JacksonJsonSupport {
+trait GamificationServerStack extends ScalatraServlet with JacksonJsonSupport {
 
   protected implicit val jsonFormats: Formats = DefaultFormats
 

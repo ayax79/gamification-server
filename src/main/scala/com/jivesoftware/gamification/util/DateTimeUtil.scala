@@ -10,7 +10,7 @@ object DateTimeUtil {
    * @param ts nitro timestamp... in seconds
    * @return the DateTime object
    */
-  def asNitroTimeStamp(ts: String): Option[DateTime] = {
+  def fromNitroTimeStamp(ts: String): Option[DateTime] = {
     try {
       if (ts != null) Option(new DateTime(ts.toLong * 1000L))
       else None
@@ -20,5 +20,8 @@ object DateTimeUtil {
     }
   }
 
+  implicit def toNitroTimeStamp(dt: DateTime) =
+    if (dt != null) dt.getMillis / 1000L
+    else null
 
 }
