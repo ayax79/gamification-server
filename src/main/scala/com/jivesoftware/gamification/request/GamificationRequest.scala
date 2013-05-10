@@ -2,8 +2,8 @@ package com.jivesoftware.gamification.request
 
 import org.json4s.JsonAST.{JObject, JString, JField, JArray}
 import java.util.UUID
-import com.jivesoftware.gamification.request.user.LoginRequest
 import org.slf4j.LoggerFactory
+import com.jivesoftware.gamification.user.request.LoginRequest
 
 object GamificationRequest {
 

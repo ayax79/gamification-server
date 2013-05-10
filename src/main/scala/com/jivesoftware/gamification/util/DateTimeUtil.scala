@@ -20,8 +20,8 @@ object DateTimeUtil {
     }
   }
 
-  implicit def toNitroTimeStamp(dt: DateTime) =
-    if (dt != null) dt.getMillis / 1000L
+  implicit def toNitroTimeStamp(dt: DateTime): String =
+    if (dt != null) (dt.getMillis / 1000L).asInstanceOf[String]
     else null
 
 }
