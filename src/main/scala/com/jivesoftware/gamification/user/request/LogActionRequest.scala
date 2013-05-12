@@ -2,7 +2,7 @@ package com.jivesoftware.gamification.user.request
 
 import com.jivesoftware.gamification.request.{GamificationResponse, ResponseCode, GamificationRequest}
 import java.util.UUID
-import org.json4s.JsonAST.JValue
+import org.json4s.JsonAST.{JObject, JValue}
 import org.json4s.JsonDSL._
 import com.jivesoftware.gamification.util.UUIDUtil
 import com.jivesoftware.gamification.util.MapUtil._
@@ -34,7 +34,7 @@ case class LogActionRequest(asyncToken: UUID,
 
 object LogActionRequest {
 
-  val method = "user.loginAction"
+  val method = "user.logAction"
 
   def apply(map: Map[String, String]): Option[LogActionRequest] =
     for {
@@ -55,7 +55,7 @@ case class LogActionResponse(code: ResponseCode,
                              request: LogActionRequest) extends GamificationResponse {
   def toJson = {
     val json: JValue = ("code" -> code.code)
-    json ++ request.toJson
+    json merge request.toJson
   }
 }
 

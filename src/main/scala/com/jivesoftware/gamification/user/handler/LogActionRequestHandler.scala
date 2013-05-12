@@ -9,7 +9,6 @@ class LogActionRequestHandler extends RequestHandler[LogActionRequest, LogAction
 
   private val log = LoggerFactory.getLogger(classOf[LogActionRequestHandler])
 
-
   def handler(request: LogActionRequest): LogActionResponse = {
     // eventually this should just send stuff to a queue.
     log.info("Logging a new action request " + request.toString)

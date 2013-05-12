@@ -32,7 +32,12 @@ object GamificationRequest {
       req = parseQueryString(content) // parse the url encoded content for the batch request
       method <- req.get("method") // grab the method from the map
     } yield  request(method, req)
-    requests.flatten
+    println("------- requests " + requests)
+
+
+    val flat = requests.flatten
+    println(s"----- Found ${flat.size} requests")
+    flat
   }
 
 

@@ -13,16 +13,18 @@ object GamificationResponse {
 
   def toJson(responses: List[Either[UnhandledRequest, GamificationResponse]]): JValue = {
 
-    val arr: JArray =
-      responses.map {
+    val arr: JArray = {
+      val list:List[JValue] = responses.map {
         case Left(l) => l.toJson
         case Right(r) => r.toJson
       }
+      list
+    }
 
     ("Nitro" ->
       ("res" -> ResponseCode.OK.code) ~
-        ("method" -> "batch.run") ~
-        ("Nitro" -> arr))
+      ("method" -> "batch.run") ~
+      ("Nitro" -> arr))
   }
 
 }

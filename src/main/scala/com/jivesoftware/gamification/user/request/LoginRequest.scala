@@ -3,7 +3,7 @@ package com.jivesoftware.gamification.user.request
 import com.jivesoftware.gamification.request.{GamificationResponse, ResponseCode, GamificationRequest}
 import java.util.UUID
 import org.joda.time.DateTime
-import org.json4s.JsonAST.JValue
+import org.json4s.JsonAST.{JValue, JObject}
 import com.jivesoftware.gamification.util.{DateTimeUtil, UUIDUtil}
 import org.json4s.JsonDSL._
 import UUIDUtil._
@@ -38,7 +38,7 @@ case class LoginResponse(code: ResponseCode, sessionKey: String, request: LoginR
   def toJson = {
     val json:JValue = ("Login" -> ("sessionKey" -> sessionKey)) ~
       ("res" -> code.code)
-    json ++ request.toJson
+    json merge request.toJson
   }
 
 }
