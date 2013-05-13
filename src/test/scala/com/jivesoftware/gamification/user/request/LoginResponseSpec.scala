@@ -1,6 +1,5 @@
 package com.jivesoftware.gamification.user.request
 
-//import org.specs2.mutable._
 import java.util.UUID
 import org.joda.time.DateTime
 import com.jivesoftware.gamification.request.ResponseCode
